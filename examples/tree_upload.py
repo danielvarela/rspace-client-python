@@ -46,7 +46,6 @@ parser.add_argument("workspaceFolder", help="Folder ID in Workspace (number only
 parser.add_argument("sharedFolder", help="Folder ID in Shared area (number only)", type=int)
 parser.add_argument("galleryDocFolder", help="Folder ID in Gallery Docs area (number only)", type=int)
 parser.add_argument("galleryImageFolder", help="Folder ID in Gallery Images area (number only)", type=int)
-parser.add_argument("wordImportImageFolder", help="Folder ID in Gallery Images  for embedded images", type=int)
 
 ResumeMode = False
 args = parser.parse_args()
@@ -314,7 +313,8 @@ for dirName, subdirList, fileList in os.walk(args.srcDir):
                     create_dir_and_ancestors(gdfolders, dirName,'GFD')
                     # upload to gdfolders[dirName]
                     galleryItemPath = os.path.join(dirName,filename)
-                    
+                    if filename.startswith("."):
+                        continue
                     print('uploading %s to Gallery Docs' % galleryItemPath)
                     with open(galleryItemPath, 'rb') as f:
                             new_file_id=-1
